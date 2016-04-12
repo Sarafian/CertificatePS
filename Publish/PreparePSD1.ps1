@@ -30,7 +30,7 @@ foreach($module in $modules)
         "Guid"=$guid;
         "ModuleVersion"=$semVersion;
         "Path"=$psd1Path;
-        "Tags"=@('Markdown', 'Tools');
+        "Tags"=@('Certificate', 'Domain', 'Tools', 'ActiveDirectory');
         "LicenseUri"='https://github.com/Sarafian/CertificatePS/blob/master/LICENSE';
         "ProjectUri"= 'https://github.com/Sarafian/CertificatePS/';
         "IconUri" ='https://cdn0.iconfinder.com/data/icons/fatcow/32x32/ssl_certificates.png';
