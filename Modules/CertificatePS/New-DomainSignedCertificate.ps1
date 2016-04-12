@@ -1,4 +1,46 @@
-# http://serverfault.com/questions/670160/how-can-i-create-and-install-a-domain-signed-certificate-in-iis-using-powershell
+<#
+    .SYNOPSIS
+        This commandlet requests a certificate from the active directory certificate services and adds it to the store
+
+    .DESCRIPTION
+        This commandlet requests a certificate from the active directory certificate services and adds it to the store. The commandlet automates the flow of certreq.exe.
+
+    .PARAMETER  Hostname
+        The hostname of the certificate also known as the Common Name (CN)
+
+    .PARAMETER  Organization
+        The organization of the certificate (O)
+
+    .PARAMETER  OrganizationalUnit
+        The organization unit of the certificate (OU)
+
+    .PARAMETER  Locality
+        The locality unit of the certificate also known as the city (L)
+
+    .PARAMETER  State
+        The state of the certificate (S)
+
+    .PARAMETER  Country
+        The country of the certificate (C)
+
+    .PARAMETER  CertificateAuthority
+        The the certificate authority that will issue the certificate. For a sever attached to a domain use the certutil to find the value.
+
+    .PARAMETER  FriendlyName
+        The friendly name of the certificate. Default use the yyyyMMdd.hostname
+
+    .PARAMETER  Keylength
+        The key length of the certificate
+
+    .PARAMETER  workdir
+        The path where the temporary files are generated. Default is the %temp%
+
+    .EXAMPLE
+        New-DomainSignedCertificate -Hostname "example.com" -CertificateAuthority ""
+
+    .LINK
+        http://serverfault.com/questions/670160/how-can-i-create-and-install-a-domain-signed-certificate-in-iis-using-powershell
+#>
 function New-DomainSignedCertificate {
     [CmdletBinding()]
     param(

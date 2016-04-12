@@ -1,6 +1,11 @@
 # CertificatePS
 Powershell helper module for certificates
 
+| Branch | Status
+| ---------- | ---------
+| **master** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/12/badge)
+| **develop** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/11/badge)
+
 # Commandlets
 
 - Get-CertificateTemplate
