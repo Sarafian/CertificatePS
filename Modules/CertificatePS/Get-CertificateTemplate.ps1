@@ -10,6 +10,6 @@ function Get-CertificateTemplate {
         if (!$temp) {
             $temp = $cert.Extensions | ?{$_.Oid.Value -eq "1.3.6.1.4.1.311.21.7"}
         }
-        $temp.Format(1)
+        $temp.Format(0)
     }
 }
