@@ -28,7 +28,6 @@ function Get-CertificateTemplate {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-        [ValidateNotNull]
         [Security.Cryptography.X509Certificates.X509Certificate2]$Certificate
  )
     Process {
