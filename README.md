@@ -10,6 +10,8 @@ Powershell helper module for certificates
 
 - Get-CertificateTemplate
 - New-DomainSignedCertificate
+- Copy-CertificateToRemote
+- Move-CertificateToRemote
 
 # Example script
 
@@ -28,5 +30,18 @@ New-DomainSignedCertificate -Hostname "example.com" -CertificateAuthority ""
 
 To get the `-CertificateAuthority` use `certutil` from a command prompt.
 
+## Copy-CertificateToRemote
 
+```powershell
+$certificate=New-DomainSignedCertificate -Hostname "example.com" -CertificateAuthority ""
+$pfxPassword=ConvertTo-SecureString “password” -AsPlainText -Force
+$certificate|Copy-CertificateToRemote -ComputerName EXAMPLE -PfxPassword $pfxPassword -MoveChain
+```
 
+## Move-CertificateToRemote
+
+```powershell
+$certificate=New-DomainSignedCertificate -Hostname "example.com" -CertificateAuthority ""
+$pfxPassword=ConvertTo-SecureString “password” -AsPlainText -Force
+$certificate|Move-CertificateToRemote -ComputerName EXAMPLE -PfxPassword $pfxPassword -MoveChain
+```
