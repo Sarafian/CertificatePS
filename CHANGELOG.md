@@ -1,3 +1,8 @@
+**20161010**
+- Improved cmdlet `New-DomainSignedCertificate`
+- New cmdlet `Copy-CertificateToRemote`
+- New cmdlet `Move-CertificateToRemote`
+
 **20160413**
 Fixed a bug in `Get-CertificateTemplate`
 

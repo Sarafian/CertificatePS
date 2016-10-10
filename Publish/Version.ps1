@@ -1,6 +1,6 @@
 function Get-Version {
     $major=1
-    $minor=1
+    $minor=2
     $patch=0
 
     return "$major.$minor"    
@@ -12,6 +12,6 @@ function Get-Version {
     $semVersion="$major.$minor.$patch-$prerelease-$build"
     #>
 
-    $build=[string](1200 * ($date.Year -2015)+$date.Month*100+$date.Day)+$date.ToString("HHmmss")
+    $build=[string](1200 * ($date.Year -2015)+$date.Month*100+$date.Day)+$date.ToString("HHmm")
     "$major.$minor.$build.$patch"    
 }

@@ -114,19 +114,39 @@ RequestType = PKCS10
 KeyUsage = 0xa0
 "@
 
-        $inf | Set-Content -Path $infFile
+        $inf | Set-Content -Path $infFile -Force
 
         Write-Verbose "Creating the certificate request ..."
-        & certreq.exe -new "$infFile" "$requestFile"
+        $certreqArgs=@(
+            "-new"
+            $infFile
+            $requestFile
+        )
+        Start-Process -FilePath "certreq.exe" -ArgumentList $certreqArgs -NoNewWindow -Wait
 
+        $certreqArgs=@(
+            "-submit"
+            "-config"
+            $CertificateAuthority
+            "-attrib"
+            "CertificateTemplate:WebServer"
+            $requestFile
+            $CertFileOut
+        )
         Write-Verbose "Submitting the certificate request to the certificate authority ..."
-        & certreq.exe -submit -config "$CertificateAuthority" -attrib "CertificateTemplate:WebServer" "$requestFile" "$CertFileOut"
+        Start-Process -FilePath "certreq.exe" -ArgumentList $certreqArgs -NoNewWindow -Wait
 
         if (Test-Path "$CertFileOut") {
             Write-Verbose "Installing the generated certificate ..."
-            & certreq.exe -accept "$CertFileOut"
+            $certreqArgs=@(
+                "-accept"
+                $CertFileOut
+            )
+            Start-Process -FilePath "certreq.exe" -ArgumentList $certreqArgs -NoNewWindow -Wait
+            $certificate=[System.Security.Cryptography.X509Certificates.X509Certificate2]::CreateFromCertFile($CertFileOut)
+            $certificate2=New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Certificate2 -ArgumentList $certificate
+            Get-ChildItem Cert:\LocalMachine\My |Where-Object -Property Thumbprint -EQ $certificate2.Thumbprint
         }
-
     }
     Finally {
         Get-ChildItem "$workdir\$fileBaseName.*" | remove-item
