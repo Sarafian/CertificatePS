@@ -8,7 +8,7 @@ $semVersion=Get-Version
 $author="Alex Sarafian"
 $company=""
 $copyright="(c) $($date.Year) $company. All rights reserved."
-$description="A module to help render Markdown from powershell"
+$description="A module to enhance certificate management."
 
 $modules=Get-ChildItem "$PSScriptRoot\..\Modules\"
 
