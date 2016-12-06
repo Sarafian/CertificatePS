@@ -3,12 +3,13 @@ Powershell helper module for certificates
 
 | Branch | Status
 | ---------- | ---------
-| **master** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/12/badge)
-| **develop** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/11/badge)
+| **master** | ![masterstatus](https://asarafian.visualstudio.com/_apis/public/build/definitions/d1a511ea-5215-45c6-adec-c83eb5ae6bb7/25/badge)
+| **develop** | ![developstatus](https://asarafian.visualstudio.com/_apis/public/build/definitions/d1a511ea-5215-45c6-adec-c83eb5ae6bb7/24/badge)
 
 # Commandlets
 
 - Get-CertificateTemplate
+- Get-CertificateSubjectInfo
 - New-DomainSignedCertificate
 - Copy-CertificateToRemote
 - Move-CertificateToRemote
@@ -19,6 +20,12 @@ Powershell helper module for certificates
 
 ```powershell
 Get-ChildItem "Cert:\LocalMachine\My" | Select-Object Name,Thumbprint,@{Name="Template";Expression={Get-CertificateTemplate $_}}
+```
+
+## Get-CertificateSubjectInfo
+
+```powershell
+Get-ChildItem "Cert:\LocalMachine\My" | Get-CertificateSubjectInfo
 ```
 
 ## New-DomainSignedCertificate
