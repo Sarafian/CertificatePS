@@ -9,6 +9,7 @@ Powershell helper module for certificates
 # Commandlets
 
 - Get-CertificateTemplate
+- Get-CertificateSubjectInfo
 - New-DomainSignedCertificate
 - Copy-CertificateToRemote
 - Move-CertificateToRemote
@@ -19,6 +20,12 @@ Powershell helper module for certificates
 
 ```powershell
 Get-ChildItem "Cert:\LocalMachine\My" | Select-Object Name,Thumbprint,@{Name="Template";Expression={Get-CertificateTemplate $_}}
+```
+
+## Get-CertificateSubjectInfo
+
+```powershell
+Get-ChildItem "Cert:\LocalMachine\My" | Get-CertificateSubjectInfo
 ```
 
 ## New-DomainSignedCertificate

@@ -1,5 +1,12 @@
+<#PSScriptInfo
+
+.VERSION 1.3
+
+#>
+
 $names=@(
     "Get-CertificateTemplate"
+    "Get-CertificateSubjectInfo"
     "New-DomainSignedCertificate"
     "Move-CertificateToRemote"
     "Copy-CertificateToRemote"

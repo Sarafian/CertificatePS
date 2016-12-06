@@ -35,6 +35,14 @@ function Get-CertificateTemplate {
         if (!$temp) {
             $temp = $Certificate.Extensions | ?{$_.Oid.Value -eq "1.3.6.1.4.1.311.21.7"}
         }
-        $temp.Format(0)
+        #Sometimes $temp is null
+        if($temp){
+            $temp.Format(0)
+        }
+        else
+        {
+            Write-Warning "Cannot evaluate certificate template"
+            "Unknown"
+        }
     }
 }
