@@ -1,9 +1,8 @@
 ﻿param(
-    [Parameter(Mandatory=$true)]
-    [string]$Repository,
     [Parameter(Mandatory=$false)]
     [string]$NuGetApiKey=$null
 )
+$repository="PSGallery"
 $moduleName="CertificatePS"
 $progressActivity="Publish $moduleName"
 
@@ -37,7 +36,7 @@ try
     #region query
     Write-Debug "Querying $moduleName"
     Write-Progress -Activity $progressActivity -Status "Querying..."
-    $repositoryModule=Find-Module -Name $moduleName -Repository $Repository -ErrorAction SilentlyContinue
+    $repositoryModule=Find-Module -Name $moduleName -Repository $repository -ErrorAction SilentlyContinue
     Write-Verbose "Queried $moduleName"
     $shouldTryPublish=$false
 
@@ -61,7 +60,7 @@ try
     }
     else
     {
-        Write-Verbose "Module is not yet published to the $Repository repository"
+        Write-Verbose "Module is not yet published to the $repository repository"
         $shouldTryPublish=$true
     }
     #endregion
@@ -103,11 +102,11 @@ try
         Write-Progress -Activity $progressActivity -Status "Publishing..."
         if($NuGetApiKey)
         {
-            Publish-Module -Repository $Repository -Path $modulePath -NuGetApiKey $NuGetApiKey -Confirm:$false
+            Publish-Module -Repository $repository -Path $modulePath -NuGetApiKey $NuGetApiKey -Confirm:$false
         }
         else
         {
-            Publish-Module -Repository $Repository -Path $modulePath -NuGetApiKey "MockKey" -WhatIf -Confirm:$false
+            Publish-Module -Repository $repository -Path $modulePath -NuGetApiKey "MockKey" -WhatIf -Confirm:$false
         }
         Write-Verbose "Published $moduleName"
         #endregion

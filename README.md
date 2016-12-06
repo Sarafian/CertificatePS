@@ -3,8 +3,8 @@ Powershell helper module for certificates
 
 | Branch | Status
 | ---------- | ---------
-| **master** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/12/badge)
-| **develop** | ![masterstatus](https://asarafian.visualstudio.com/DefaultCollection/_apis/public/build/definitions/9411077a-da68-4370-9d62-7fa8ec77dfa9/11/badge)
+| **master** | ![masterstatus](https://asarafian.visualstudio.com/_apis/public/build/definitions/d1a511ea-5215-45c6-adec-c83eb5ae6bb7/25/badge)
+| **develop** | ![developstatus](https://asarafian.visualstudio.com/_apis/public/build/definitions/d1a511ea-5215-45c6-adec-c83eb5ae6bb7/24/badge)
 
 # Commandlets
 
