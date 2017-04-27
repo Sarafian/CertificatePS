@@ -1,4 +1,4 @@
-**20170427**
+**1.4**
 
 - `New-DomainSignedCertificate` will now add SAN (Subject Alternate Name). Check [SSL SAN Certificate Request and Import from PowerShell](https://blog.kloud.com.au/2013/07/30/ssl-san-certificate-request-and-import-from-powershell/).
 
