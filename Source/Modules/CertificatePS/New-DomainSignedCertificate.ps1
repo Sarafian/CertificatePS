@@ -112,6 +112,10 @@ ProviderName = "Microsoft RSA SChannel Cryptographic Provider"
 ProviderType = 12
 RequestType = PKCS10
 KeyUsage = 0xa0
+
+[Extensions]
+2.5.29.17 = "{text}"
+_continue_ = "dns=$Hostname"
 "@
 
         $inf | Set-Content -Path $infFile -Force
