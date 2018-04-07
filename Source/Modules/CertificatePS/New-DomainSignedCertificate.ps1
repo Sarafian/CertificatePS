@@ -27,16 +27,30 @@
         The the certificate authority that will issue the certificate. For a sever attached to a domain use the certutil to find the value.
 
     .PARAMETER  FriendlyName
-        The friendly name of the certificate. Default use the yyyyMMdd.hostname
+        The friendly name of the certificate. Defaults to yyyyMMdd.<hostname>
 
     .PARAMETER  Keylength
         The key length of the certificate
+
+    .PARAMETER  SANDns
+        The SubjectAltName extension fields of type=DNS. By default the <hostname> parameter is already added.
+
+    .PARAMETER  SANEmail
+        The SubjectAltName extension fields of type=EMail.
+
+    .PARAMETER  CertificateTemplate
+        The certificate template name. Defaults to 'WebServer'
+
+    .PARAMETER  attrib
+        Certreq's -attrib <AttributeString> value. 
+        Specifies the Name and Value string pairs, separated by a colon. 
+        Separate Name and Value string pairs with \n (for example, Name1:Value1\nName2:Value2).
 
     .PARAMETER  workdir
         The path where the temporary files are generated. Default is the %temp%
 
     .EXAMPLE
-        New-DomainSignedCertificate -Hostname "example.com" -CertificateAuthority ""
+        New-DomainSignedCertificate -Hostname "server1.example.com" -CertificateAuthority ""
 
     .LINK
         http://serverfault.com/questions/670160/how-can-i-create-and-install-a-domain-signed-certificate-in-iis-using-powershell
@@ -80,6 +94,21 @@ function New-DomainSignedCertificate {
         [string]
         $Keylength = "2048",
 
+        [Parameter(Mandatory=$false)]
+        [string[]]
+        $SANDns,
+
+        [parameter(Mandatory=$false)]
+        [string[]]
+        $SANEmail,
+
+        [parameter(Mandatory=$false)]
+        [string]
+        $CertificateTemplate = "WebServer",
+
+        [string]
+        $attrib,
+
         [string]
         $workdir = $env:Temp
     )
@@ -115,10 +144,32 @@ KeyUsage = 0xa0
 
 [Extensions]
 2.5.29.17 = "{text}"
-_continue_ = "dns=$Hostname"
+_continue_ = "dns=$Hostname&"
 "@
 
         $inf | Set-Content -Path $infFile -Force
+
+        if ($SANDns) {
+            foreach ($value in $SANDns) {
+                $temp = '_continue_ = "dns=' + $value + '&"'
+                add-content $infFile $temp
+            }
+        }
+
+        if ($SANEmail) {
+            foreach ($value in $SANEmail) {
+                $temp = '_continue_ = "email=' + $value + '&"'
+                add-content $infFile $temp
+            }
+        }
+
+        $attr = @"
+
+[RequestAttributes] 
+CertificateTemplate = $CertificateTemplate
+"@
+
+        add-content $infFile $attr
 
         Write-Verbose "Creating the certificate request ..."
         $certreqArgs=@(
@@ -126,17 +177,24 @@ _continue_ = "dns=$Hostname"
             $infFile
             $requestFile
         )
+
         Start-Process -FilePath "certreq.exe" -ArgumentList $certreqArgs -NoNewWindow -Wait
 
+        #Split because of conditional $attrib parameter 
         $certreqArgs=@(
             "-submit"
             "-config"
-            $CertificateAuthority
-            "-attrib"
-            "CertificateTemplate:WebServer"
-            $requestFile
-            $CertFileOut
+            """$CertificateAuthority"""
         )
+
+        if ($attrib) {
+            $certreqArgs += ""
+            $certreqArgs += $attrib
+        }
+
+        $certreqArgs += $requestFile
+        $certreqArgs += $CertFileOut
+
         Write-Verbose "Submitting the certificate request to the certificate authority ..."
         Start-Process -FilePath "certreq.exe" -ArgumentList $certreqArgs -NoNewWindow -Wait
 
@@ -153,6 +211,8 @@ _continue_ = "dns=$Hostname"
         }
     }
     Finally {
-        Get-ChildItem "$workdir\$fileBaseName.*" | remove-item
+        if (-not ($PSBoundParameters['Debug'])) {
+            Get-ChildItem "$workdir\$fileBaseName.*" | remove-item
+        }
     }
 }
